@@ -1,0 +1,276 @@
+*) Arrays and command line arguments
+*) Debugging
+*) static 
+*) Association and Aggregation
+*) Inheritence
+
+-------------------------------------------------------------------
+package infosys.demo.revise;
+   public class Demo1 {
+    public static void main(String str[]){
+     System.out.println("Hello");
+    }
+  }
+// When we compile the above program what will happen? Will it 
+compile?
+Ans  Compile 
+// Will it execute?
+Ans: Yes and will print hello
+----------------------------------------------------------------------
+Q why public access specifier with main?
+A: main is public because because JVM invokes main and it is 
+outside the class.
+-------------------------------------------------------------
+Q Why we are using the keyword static with main?
+A: JVM can invoke main() method without instantiatin the class Demo1.
+------------------------------------------------------------------------
+Q What is significance of writing return type void with main method?
+A: We are not returning any value to the JVM.
+----------------------------------------------------------------
+Q What is String str[]?
+A:  String str ( group of character). It is a command line argument
+which can store the data in the form of String.
+    System.out.println(str.length); // length of the string array
+    
+    String str="Hello";
+    System.out.println(str.length()); // length of string
+
+If we are invoking the code with 
+   java Demo1 Hello World
+System.out.println(str.length); 
+----------------------------------------------------------------------------------------------
+     package infosys.demo.revise;
+     public class Demo2 {
+       public static void main(String args[]) {
+      boolean b[]=new boolean[2];
+      for(int i=0;i<b.length;i++){
+           System.out.println(b[i]);
+      }  // end of for loop
+    }  // end of main
+  }// end of class
+  
+ --------------------------------------------
+------------------------------------------------------------------------------------------
+     package infosys.demo.revise;
+     public class Demo3 {
+       public static void main(String args[]) {
+         String str[]=new String[3]{"Rohit","Syed","Sudhir"};
+         System.out.println(str[0]);
+    }  // end of main
+  }// end 
+// Compilation error
+------------------------------------------------------------------------------------------
+  package infosys.demo.revise;
+         public class Demo4 {
+         private int i;
+         public static void main(String str[]){
+         System.out.println(i);
+        }
+      }
+Q What will be the output of the above code?
+Ans: So compilation error as we are trying to access non static i from static main.
+     So either you make i as static or create an object of Demo4 and access the value of i.
+      Demo demo=new Demo();
+     System.out.println(demo.i);
+--------------------------------------------------------------------------------------------
+package infosys.demo.revise;
+         public class Demo5 {
+         
+         public static void main(String str[]){
+         int i;  // local variable to main method
+         System.out.println(i);
+        }
+      }
+What will be the output of the above code?
+Compilation error. i is a local variable and local variable needs 
+to be initialised before access.
+--------------------------------------------------------------------------------------------------
+package infosys.demo.revise;
+         public class Demo5 {
+         int i;  
+         public static void main(String str[]){
+         Demo d=new Demo();
+         System.out.println(d.i);  //0
+        }
+      }
+// non static member variables and static variables are initialised with the default value.
+// But for local varibles we need to initialise them explicitly before they are accessed
+// in any expression or in System.out.println()
+
+
+--------------------------------------------------
+package infosys.demo.revise;
+         public class Demo6 {
+         int i=20;
+         public static void main(String str[]){
+         int i=10;
+         System.out.println(i);
+        }
+      }
+// It will display 10. 
+------------------------------------------------------------------------------------------------------
+In java we don't have the concept of mutiple inheritance 
+So we have the classes like Base1 and Base2 and we have Derived1. So we cannot write
+   public class Base1 {}
+   public class Base2 {}
+   public class Derived2 extends Base1, Base2 {}
+   So we cannot have the above syntax as we cannot make a class being derived from two or more classes.
+------------------------------------------------------------------------------------------------
+We have multi level inheritance which means , if we have class A , class B and class C.
+  public class A {}
+  public class B extends class A{}
+  public class C extends class B{}
+
+   A
+   |
+   |
+   B
+   |
+   |
+   C
+-----------------------------------------------------------------------------------------------------
+
+Polymorphism:===> Poly means many
+morphic:====> form / structures
+*) static polymorphism=====> Method Overloading and Constructor Overloading
+*) dynamic polymorphism====> Method Overriding ( Inheritance )
+Method method overriding cannot be implemented in a single class
+--------------------------------------------------------------------------------------------------
+for method overloading the methods:
+* Can be in the same class in our example all the methods are within the Number class.
+* methods will be having the same name.
+* methods will be having the different number of parameters. In our example add() is not accepting
+any parameter and add(int,int,int) is accepting 3 parameters.
+* methods can have the different datatypes which means
+   void add(int num1, int num2){}
+   void add(float f1, float f2){}
+   void add(float f1, float f2, float f3){ }
+   void add(flaot f1, int num2) {}
+* We dont decide method overloading based on the return type
+   void add(int num1, int num2){}
+   int add(int num1, int num2) {}
+So if we try to keep the above two declarations, the code will give compilation error
+----------------------------------------------------------------------------------------------
+Example from the predefined classes like String
+    String substring(int startIndex, int endIndex)
+    String substring(int startIndex)
+The above two methods are example of method overloading and they are available within the String
+class.
+
+   String( String str)
+   String( char array[])
+ The above two lines are example of constructor overloading
+------------------------------------------------------------------------------------------------
+Method overriding:
+* We use method overriding in the concept of inheritance.
+     package infosys.demo1.method.overriding;
+     public class Parent {
+
+     public void display() {
+     System.out.println("I am the display method of the parent class");
+     }
+  }
+     package infosys.demo1.method.overriding;
+    public class Child extends Parent {
+     public void display() {
+     System.out.println("I am the display method of the Child class");
+     }
+   }
+
+     package infosys.demo1.method.overriding;
+     public class Main {
+     public static void main(String args[]) {
+         Parent parent=new Parent();
+         parent.display(); // I am the display method of the parent class
+         Child child=new Child();
+         child.display();   // I am the display method of the Child class
+      // So the above line displays the message for the child because 
+       // the method display is having the same return type, same method name , same number of
+       // parameters( currently the methods are parameterless).
+
+       }
+   }
+* In method overriding method names will be same in both the parent and in the child class.
+* Method return type will be same.
+* Method parameters will be same.
+* Datatype of the parameters will be same.
+[ Note: Base class/Parent class method is overridden by the Derived/child class/sub class method.
+  So base class method is called overridden method and child class method is called 
+  overriding method. ]
+---------------------------------------------
+We have the concept of Type Conversion and Type casting with reference type also.
+Just like primitive type:
+* In primitive type conversion is from smaller data type to larger datatype/
+  int num=20;
+  double d=num;
+* In primitive datatype type casting or explicit conversion is from the datatype which is
+  bigger in size to datatype which is smaller in size.
+  double d=12.3;
+  int num=(int)d;
+-----------------------------------------------------------------------------------------
+In reference type we have the concept of type conversion and casting. For that the classes\
+should have parent child relationship.
+   public class A {}
+   public class B {}
+for the above two classes we cannot talk about type conversion and casting as they are not
+related classes in the form of inheritance.
+In the below case 
+    public class A {}
+    public class B extends A {}
+In the above case we can talk about type conversion and type casting.
+    
+   A a=new B(); ====> Type conversion// We are converting from Derived type to Base type
+   B b=(B)a;    ====> Type casting   // We are converting from Base type to Derived type
+-------------------------------------------------------------------------------------------------
+Inheritance ===> Is A relationship
+Employee is a Person
+   public class Person {}
+   public class Employee extends Person {}
+Student is a Person
+   public class Student extends Person {}
+   
+   Person person=new Person();
+   Employee employee=new Employee();
+   Student student=new Student();
+   
+   person=employee; // reference of the base type can store the address or reference of the Sub class
+   object.
+  // Base class are always generic and Derived classes are always
+  // So in our case we say Employee is a Person but we never say Person is an Employee.
+  // Inheritance is always from down to up. Which means derived class extends base class and
+  // and if it is required we can convert derived type to base type but the reverse that is 
+  // from Base we wont be able to covert to the Derived type.
+
+     Person person=new Person();
+     Employee employee=person;
+    // It wont give compilation error but it will show runtime error or exception called
+    // ClassCastException
+[ The above can be understood by taking an example of a glass full of water and
+an empty cup. Assuming the glass is of larger size as comparison to the cup.
+So we are trying to put the glass of water to the cup. What do you think?
+Some of the water will get stored in the cup and some of the water is 
+spilled/overflow]
+]
+    But what can be done as 
+     Employee employee=new Employee();
+     Person person=employee;
+     employee=(Employee)person;
+     So the above 3 lines are fine because we first created an object of derived type which 
+     we first pointed by the derived class reference only.
+     Employee employee=new Employee();
+     Next in the reference of the base class we are storing or passing the reference of the 
+     derived class.
+     Person person=employee;
+     After that from person again we want to convert it into Employee type and for that we
+     procees with typecasting.
+     employee=(Employee)person;
+[ The above scenario is we have a cup of water and we have a glass which is larger than the cup.
+So we are putting the cup of water in the glass ( person=employee). Now again from the glass we want
+to put it back to the cup. Is it  possible to do so?
+ans: Yes employee=(Employee)person; 
+In case of reference type , type casting should be preceeded by type conversion. 
+------------------------------------------------------------------------------------------------
+
+Converting from derived to Base ====> Type Conversion
+Converting from Base to derived ====> Type Casting 
+So Type conversion will be always from Derived to Base/ Frome Specific class to Generic class ( Base type)
